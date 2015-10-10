@@ -1,10 +1,12 @@
 {
   "name": "gettext-loader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "gettext webpack loader for creating en.po files",
-  "main": "dist/bundle.js",
+  "main": "dist/gettext-loader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm run build",
+    "build": "babel src/ --out-dir dist/",
+    "test": "mocha --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,6 @@
   },
   "homepage": "https://github.com/mrblueblue/gettext-loader#readme",
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-core": "^5.8.25",
     "babel-loader": "^5.3.2",
     "chai": "^3.3.0",
     "mocha": "^2.3.3",
@@ -34,6 +34,8 @@
   },
   "dependencies": {
     "ast-utils-esprima": "^0.1.1",
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
     "esprima-fb": "^15001.1001.0-dev-harmony-fb",
     "loader-utils": "^0.2.11",
     "ramda": "^0.17.1"

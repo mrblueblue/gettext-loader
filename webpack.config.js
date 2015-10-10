@@ -9,8 +9,9 @@ var config = {
 
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /(node_modules)/, loaders: ['babel'] },
-      { test: /\.coffee/, exclude: /(node_modules)/, loaders: ['gettext-loader', 'coffee-loader'] }
+      { test: /\.jst/, loaders: ['dot-loader'] },
+      { test: /\.jsx?$/, loaders: ['babel'] },
+      { test: /\.coffee/, loaders: ['coffee-loader'] }
     ]
   },
 

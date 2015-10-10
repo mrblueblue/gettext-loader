@@ -1,33 +1,29 @@
-const root = process.env.PWD;
-
 import fs from 'fs';
 import path from 'path';
-
-import esprima from 'esprima-fb'
 import loaderUtils from 'loader-utils';
+import {compose} from 'ramda'
 
-import {compose, prop} from 'ramda'
+import {
+  extractTranslations,
+  formatTranslations,
+  formatHeader,
+  addFilePath,
+  parseECMA
+} from './utils';
 
-import extractTranslations from './utils/extractTranslations'
-import formatTranslations from './utils/formatTranslations'
-import formatHeader from './utils/formatHeader'
-import addFilePath from './utils/addFilePath'
-
+const root = process.env.PWD;
 const config = require(path.join(root, 'gettext.config.js'));
 
 export default function(source) {
-
   const loaderOptions = loaderUtils.parseQuery(this.query);
 
-  const AST = prop('body')(esprima.parse(source, {tolerant: true, loc: true, range: true}));
-
   const header = formatHeader(config.header);
-
   const translations = compose(
-    formatTranslations, 
+    formatTranslations,
     addFilePath(this.request),
-    extractTranslations
-  )(AST);
+    extractTranslations,
+    parseECMA
+  )(source);
 
   const output = {
     path: `${root}/${config.header['Language']}.po`,
@@ -35,6 +31,6 @@ export default function(source) {
   }
 
   fs.writeFileSync(`${output.path}`, output.source);
-  
+
   return source;
 }

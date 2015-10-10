@@ -1,20 +1,27 @@
 import fs from 'fs';
 import path from 'path';
 
+import esprima from 'esprima-fb'
 import loaderUtils from 'loader-utils';
 
-import esprima from 'esprima-fb';
-import {getCallExpressions} from 'ast-utils-esprima';
+import {filter, uniq} from 'ramda';
+import {getCallExpressions, isGettextFunction, getFirstArgument} from 'ast-utils-esprima';
 
 module.exports = function(source) {
 
-  this.cacheable();
+  const options = {
+    tolerant: true,
+    loc: true,
+    range: true
+  }
 
-  const ast = esprima.parse(source, { tolerant: true, loc: true, range: true }).body;
+  const ast = esprima.parse(source, options).body;
 
-  const CallExpressions = getCallExpressions(ast);
+  const callExpressions = getCallExpressions(ast);
+  const gettextFunctions = filter(isGettextFunction, callExpressions);
+  const translations = uniq(getFirstArgument(gettextFunctions));
 
-  console.log(CallExpressions);
+  console.log(gettextFunctions[1].arguments[0].quasis);
 
   return source;
 }

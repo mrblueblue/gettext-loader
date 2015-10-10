@@ -1,27 +1,40 @@
+const root = process.env.PWD;
+
 import fs from 'fs';
 import path from 'path';
 
 import esprima from 'esprima-fb'
 import loaderUtils from 'loader-utils';
 
-import {filter, uniq} from 'ramda';
-import {getCallExpressions, isGettextFunction, getFirstArgument} from 'ast-utils-esprima';
+import {compose, prop} from 'ramda'
 
-module.exports = function(source) {
+import extractTranslations from './utils/extractTranslations'
+import formatTranslations from './utils/formatTranslations'
+import formatHeader from './utils/formatHeader'
+import addFilePath from './utils/addFilePath'
 
-  const options = {
-    tolerant: true,
-    loc: true,
-    range: true
+const config = require(path.join(root, 'gettext.config.js'));
+
+export default function(source) {
+
+  const loaderOptions = loaderUtils.parseQuery(this.query);
+
+  const AST = prop('body')(esprima.parse(source, {tolerant: true, loc: true, range: true}));
+
+  const header = formatHeader(config.header);
+
+  const translations = compose(
+    formatTranslations, 
+    addFilePath(this.request),
+    extractTranslations
+  )(AST);
+
+  const output = {
+    path: `${root}/${config.header['Language']}.po`,
+    source: `${header}\n${translations}`
   }
 
-  const ast = esprima.parse(source, options).body;
-
-  const callExpressions = getCallExpressions(ast);
-  const gettextFunctions = filter(isGettextFunction, callExpressions);
-  const translations = uniq(getFirstArgument(gettextFunctions));
-
-  console.log(gettextFunctions[1].arguments[0].quasis);
-
+  fs.writeFileSync(`${output.path}`, output.source);
+  
   return source;
 }

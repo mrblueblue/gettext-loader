@@ -8,7 +8,7 @@ chai.should();
 function WebpackMock(){
   this.cacheable = function(){return}
   this.bob = function(){return}
-  this.request = '/mock/dist.js'
+  this.request = '/Users/j.huang/code/ast-utils-esprima/node_modules/babel-loader/index.js!/Users/j.huang/code/ast-utils-esprima/node_modules/gettext-loader/dist/gettext-loader.js!/Users/j.huang/code/gettext-loader/sources/jsx-example.js'
 }
 
 describe('first test', () => {

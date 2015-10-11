@@ -15,9 +15,13 @@ const root = process.env.PWD;
 const config = require(path.join(root, 'gettext.config.js'));
 
 export default function(source) {
-  const loaderOptions = loaderUtils.parseQuery(this.query);
+
+  if (this.cacheable){
+    this.cacheable();
+  }
 
   const header = formatHeader(config.header);
+
   const translations = compose(
     formatTranslations,
     addFilePath(this.request),
@@ -26,7 +30,7 @@ export default function(source) {
   )(source);
 
   const output = {
-    path: `${root}/${config.header['Language']}.po`,
+    path: config.output || `${root}/${config.header['Language']}.po`,
     source: `${header}\n${translations}`
   }
 

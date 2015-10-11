@@ -1,19 +1,10 @@
-import {filter, map, concat} from 'ramda';
+import {filter, map, curry} from 'ramda';
+import {getCallExpressions, getFirstArgument} from 'ast-esprima-utils';
+import filterGettext from './filterGettext';
 
-import {
-  getCallExpressions,
-  isGettextMethod,
-  isGettextFunction,
-  getFirstArgument
-} from 'ast-esprima-utils';
-
-export default function extractTranslations(ast){
-
+function extractTranslations(methods, ast){
   const callExpressions = getCallExpressions(ast);
-  const gettextFunctions = filter(isGettextFunction, callExpressions);
-  const gettextMethods = filter(isGettextMethod, callExpressions)
-  const gettexts = concat(gettextFunctions, gettextMethods)
-
+  const gettexts = filterGettext(methods, callExpressions);
   const locations = map((node) => node.loc.start)(gettexts)
   const translations = getFirstArgument(gettexts);
 
@@ -28,3 +19,5 @@ export default function extractTranslations(ast){
     }
   })(translations);
 }
+
+export default curry(extractTranslations);

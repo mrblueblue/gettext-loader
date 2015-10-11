@@ -21,7 +21,7 @@ export default function(source) {
   const translations = compose(
     formatTranslations,
     addFilePath(this.request),
-    extractTranslations,
+    extractTranslations(config.methods),
     parseECMA
   )(source);
 

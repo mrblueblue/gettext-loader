@@ -1,18 +1,21 @@
 # gettext-loader
 
-A Webpack loader that creates PO files by parsing your source files.
+A Webpack loader that compiles Gettext PO files from source code.
 
-## Getting Started 
+## Installation
 
 ```
 npm install gettext-loader
 ```
 
-To use `gettext-loader` you will need a `gettext.config.js` file in your root directory. This config file contains the header for your PO file.
+## Getting Started
+
+To use `gettext-loader` you will need a `gettext.config.js` file in your root directory. This config file contains the header for your PO file as well as the localization methods used in your code.
 
 ```javascript
 
 module.exports = {
+  methods: ['__', '$translate'],
   header: {
     'Project-Id-Version': '1233',
     'Report-Msgid-Bugs-To':'Jonathan Huang',
@@ -28,16 +31,17 @@ module.exports = {
 
 ```
 
-You can then simply use `gettext-loader` by putting it your `webpack.config.js` file. If you are using other loaders, place it before the others.
+Since 'gettext-loader' only parses Javascript (including ES6 and JSX), place it after loaders that transform some source to JS code.
 
 ```javascript
 
 module: {
   loaders: [
-    { test: /\.jsx?$/, loaders: ['babel', 'gettext-loader'] }
+    { test: /\.jst/, loaders: ['gettext-loader', 'dot-loader'] },
+    { test: /\.jsx?$/, loaders: ['babel', 'gettext-loader'] },
+    { test: /\.coffee/, loaders: ['gettext-loader', 'coffee-loader'] }
   ]
-},
 
 ```
 
-`gettext-loader` does not modify your source code. It only outputs a PO file.
+`gettext-loader` does not modify your source code. It only outputs a PO file by parsing your JS source code.

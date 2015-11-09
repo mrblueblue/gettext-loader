@@ -1,11 +1,12 @@
 {
   "name": "gettext-loader",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "gettext webpack loader for creating en.po files",
   "main": "dist/gettext-loader.js",
   "scripts": {
     "install": "npm run build",
-    "build": "babel src/ --out-dir dist/",
+    "build:dev": "mkdir -p node_modules/gettext-loader && npm run build && cp -R dist/ node_modules/gettext-loader/",
+    "build": "gulp utils && babel src/ --out-dir dist/",
     "test": "mocha --compilers js:babel/register"
   },
   "repository": {
@@ -39,6 +40,7 @@
     "babel-core": "^5.8.25",
     "esprima-fb": "^15001.1001.0-dev-harmony-fb",
     "loader-utils": "^0.2.11",
+    "mkdirp": "^0.5.1",
     "ramda": "^0.17.1"
   }
 }

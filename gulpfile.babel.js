@@ -27,6 +27,9 @@ gulp.task('utils', () => {
       R.map(removeExtension),
       removeIndexFile
     )(data);
+    
+    console.log('creating /utils/index.js ...');
+    console.log(files.join(''));
 
     fs.writeFileSync('src/utils/index.js', files.join(''));
   });

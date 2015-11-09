@@ -1,9 +1,11 @@
 import fs from 'fs';
+import mkdirp from 'mkdirp';
 import path from 'path';
 import loaderUtils from 'loader-utils';
-import {compose} from 'ramda'
+import {compose} from 'ramda';
 
 import {
+  getFolderPath,
   extractTranslations,
   formatTranslations,
   formatHeader,
@@ -30,11 +32,14 @@ export default function(source) {
   )(source);
 
   const output = {
-    path: config.output || `${root}/${config.header['Language']}.po`,
+    path: config.output || `${config.header['Language']}.po`,
     source: `${header}\n${translations}`
   }
 
-  fs.writeFileSync(`${output.path}`, output.source);
+  const filePath = `${root}/${output.path}`;
+  fs.writeFile(filePath, output.source, (err) => {
+    console.log('There was an error!', err)
+  });
 
   return source;
 }

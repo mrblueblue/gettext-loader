@@ -1,5 +1,6 @@
 module.exports = {
   methods: ['__', '$translate'],
+  output: 'custom-name.po', //optional
   header: {
     'Project-Id-Version': '1233',
     'Report-Msgid-Bugs-To':'Jonathan Huang',

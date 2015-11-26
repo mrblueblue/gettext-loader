@@ -1,10 +1,7 @@
 export const addFilePath = require('./addFilePath');
 export const extractTranslations = require('./extractTranslations');
-export const filterGettext = require('./filterGettext');
 export const formatHeader = require('./formatHeader');
 export const formatTranslations = require('./formatTranslations');
 export const getFolderPath = require('./getFolderPath');
-export const isAnyGettextFunction = require('./isAnyGettextFunction');
-export const isAnyGettextMethod = require('./isAnyGettextMethod');
 export const makeRelativePath = require('./makeRelativePath');
 export const parseECMA = require('./parseECMA');

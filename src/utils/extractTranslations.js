@@ -1,23 +1,30 @@
-import {filter, map, curry} from 'ramda';
-import {getCallExpressions, getFirstArgument} from 'ast-esprima-utils';
-import filterGettext from './filterGettext';
+import {filter, map, curry, compose, prop, head} from 'ramda';
+import {filterTreeForMethodsAndFunctionsNamed} from 'estree-utils';
 
-function extractTranslations(methods, ast){
-  const callExpressions = getCallExpressions(ast);
-  const gettexts = filterGettext(methods, callExpressions);
-  const locations = map((node) => node.loc.start)(gettexts)
-  const translations = getFirstArgument(gettexts);
+const extractTranslations = (...args) => (ast) => {
 
-  return map((translation) => {
-    const location = locations[translations.indexOf(translation)];
+  const gettextFunctions = filterTreeForMethodsAndFunctionsNamed(...args)(ast);
+
+  if (!gettextFunctions.length){
+    return [];
+  }
+
+  const gettextLocations = map((node) => node.loc.start)(gettextFunctions);
+  const firstArgument = compose(prop('value'), head, prop('arguments'));
+  const translationStrings = map(firstArgument)(gettextFunctions);
+
+  const addLocation = (string) => {
+    const location = gettextLocations[translationStrings.indexOf(string)];
     return {
-      text: translation,
+      text: string,
       loc: {
         line: location.line,
         column: location.column
       }
     }
-  })(translations);
+  }
+
+  return map(addLocation)(translationStrings);
 }
 
-export default curry(extractTranslations);
+export default extractTranslations;

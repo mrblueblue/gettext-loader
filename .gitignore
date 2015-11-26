@@ -1,5 +1,5 @@
 node_modules
 dist
-en.po
+*.po
 bundle.js
 .tmp

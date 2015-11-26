@@ -1,16 +1,15 @@
-
 'use strict';
 
-var R = require('ramda');
-var fs = require('fs');
-var gulp = require('gulp');
+import {compose, map, remove} from 'ramda';
+import fs from 'fs';
+import gulp from 'gulp';
 
 gulp.task('utils', () => {
 
   fs.readdir('src/utils', (err, data) => {
     function removeIndexFile(files){
       let indexIndex = files.indexOf('index.js');
-      return R.remove(indexIndex, 1, files);
+      return remove(indexIndex, 1, files);
     }
 
     function removeExtension(str){
@@ -19,15 +18,15 @@ gulp.task('utils', () => {
     }
 
     function buildExportStatement(file){
-      return `export const ${file} = require('./${file}');\n`;
+      return `export ${file} from './${file}';\n`;
     }
 
-    const files = R.compose(
-      R.map(buildExportStatement),
-      R.map(removeExtension),
+    const files = compose(
+      map(buildExportStatement),
+      map(removeExtension),
       removeIndexFile
     )(data);
-    
+
     console.log('creating /utils/index.js ...');
     console.log(files.join(''));
 

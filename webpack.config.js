@@ -1,4 +1,4 @@
-var config = {
+module.exports = {
 
   devtool: 'eval',
   debug: true,
@@ -10,7 +10,7 @@ var config = {
   module: {
     loaders: [
       { test: /\.jst/, loaders: ['dot-loader'] },
-      { test: /\.jsx?$/, loaders: ['babel','gettext-loader'] },
+      { test: /\.jsx?$/, loaders: ['babel-loader','gettext-loader'] },
       { test: /\.coffee/, loaders: ['coffee-loader'] }
     ]
   },
@@ -24,5 +24,3 @@ var config = {
     extensions: ['', '.js', '.jsx'],
   }
 }
-
-module.exports = config;

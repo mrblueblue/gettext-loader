@@ -1,17 +1,16 @@
+const DEFAULT_GETTEXT = '__'
+
 import fs from 'fs';
 import path from 'path';
 import loaderUtils from 'loader-utils';
 import {compose} from 'ramda';
-
 import {
   extractTranslations,
-  formatTranslations,
+  parseECMA,
   addFilePath,
-  parseECMA
+  formatTranslations,
+  getFilename
 } from './utils';
-
-const root = process.env.PWD;
-const config = require(path.join(root, 'gettext.config.js'));
 
 module.exports = function(source) {
 
@@ -19,10 +18,11 @@ module.exports = function(source) {
     this.cacheable();
   }
 
-  const translations = compose(
-    extractTranslations(config.methods),
-    parseECMA
-  )(source);
+  const query = loaderUtils.parseQuery(this.query)
+  const methodNames = Object.keys(query) || [DEFAULT_GETTEXT]
+
+  const AST = parseECMA(source);
+  const translations = extractTranslations(...methodNames)(AST);
 
   if (!translations.length){
     return source;
@@ -34,13 +34,11 @@ module.exports = function(source) {
   )(translations);
 
   const output = {
-    path: `${this.context}/en.po`,
+    path: `${this.context}/${getFilename(this.resourcePath)}.en.po`,
     source: `${formattedTranslations}`
   }
 
-  fs.writeFile(output.path, output.source, (err) => {
-    console.log('There was an error!', err)
-  });
+  fs.writeFileSync(output.path, output.source);
 
   return source;
 }

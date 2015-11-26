@@ -4,13 +4,13 @@ module.exports = {
   debug: true,
 
   output: {
-    filename: 'bundle.js'
+    filename: './.tmp/bundle.js'
   },
 
   module: {
     loaders: [
       { test: /\.jst/, loaders: ['dot-loader'] },
-      { test: /\.jsx?$/, loaders: ['babel-loader','gettext-loader'] },
+      { test: /\.jsx?$/, loaders: [`gettext-loader?__,translate`]},
       { test: /\.coffee/, loaders: ['coffee-loader'] }
     ]
   },

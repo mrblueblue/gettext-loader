@@ -3,16 +3,18 @@ import makeRelativePath from './makeRelativePath';
 import isPluralForm from './isPluralForm';
 
 import {
-  join,
+
+  compose as cx,
   concat as cat,
+  join,
   reduce,
   last,
   takeLast,
-  compose as cx,
   map,
   head,
   split,
   range
+  
 } from 'ramda';
 
 const root = process.env.PWD;

@@ -6,7 +6,7 @@ A Webpack loader that compiles Gettext PO files from source code.
 ## Installation
 
 ```
-npm install gettext-loader
+npm install --production gettext-loader
 ```
 
 ## Getting Started

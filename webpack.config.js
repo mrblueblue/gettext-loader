@@ -12,7 +12,7 @@ module.exports = {
       { test: /\.jst/, loaders: ['gettext-loader','dot-loader'] },
       { test: /\.jsx?$/, loaders: ['babel-loader', 'gettext-loader'] },
       { test: /\.js?$/, loaders: ['gettext-loader'] },
-      { test: /\.coffee/, loaders: ['gettext-loader','coffee-loader'] }
+      { test: /\.coffee/, loaders: ['gettext-loader', 'coffee-loader'] }
     ]
   },
 

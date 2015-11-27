@@ -27,7 +27,7 @@ module.exports = function(source) {
   }
 
   const output = {
-    path: `${root}/${config.output}`
+    path: `${root}/${config.output || 'en.po'}`
   }
 
   const methodNames = config.methods || [DEFAULT_GETTEXT];

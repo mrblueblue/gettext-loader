@@ -20,6 +20,7 @@
     "esprima",
     "i18n",
     "ast",
+    "po",
     "localization"
   ],
   "author": "Jonathan Huang <jon@levity.io>",

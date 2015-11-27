@@ -64,7 +64,7 @@ import React from 'react';
 import {__} from 'i18n';
 
 const translation = __('evening star');
-const plural = __('I saw the morning start %d day ago')
+const plural = __('I saw the morning star %d day ago')
 
 class Example extends React.Component {
   render(){
@@ -103,7 +103,7 @@ msgid "evening star"
 msgtr ""
 
 #: assets/jsx/example.jsx 6:17
-msgid "I saw the morning start %d day ago"
+msgid "I saw the morning star %d day ago"
 msgtr[0] ""
 msgtr[1] ""
 

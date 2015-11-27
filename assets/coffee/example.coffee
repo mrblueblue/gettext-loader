@@ -8,3 +8,4 @@ bar = __('translate me')
 
 __('sdf')
 __('e s')
+__('sdssdsds')

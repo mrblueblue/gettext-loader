@@ -2,16 +2,23 @@ const DEFAULT_GETTEXT = '__'
 
 import fs from 'fs';
 import path from 'path';
+import mkdirp from 'mkdirp';
 import loaderUtils from 'loader-utils';
 import po2json from 'po2json';
 import {compose, prop, filter} from 'ramda';
+
 import {
   extractTranslations,
+  formatHeader,
   parseECMA,
   addFilePath,
   formatWithRequest,
-  getFilename
+  getFilename,
+  getFolderPath
 } from './utils';
+
+const root = process.env.PWD;
+const config = require(path.join(root, 'gettext.config.js'));
 
 module.exports = function(source) {
 
@@ -20,12 +27,10 @@ module.exports = function(source) {
   }
 
   const output = {
-    path: `${this.context}/${getFilename(this.resourcePath)}.en.po`
+    path: `${root}/${config.output}`
   }
 
-  const query = loaderUtils.parseQuery(this.query);
-  const queries = Object.keys(query);
-  const methodNames = queries.length ? queries : [DEFAULT_GETTEXT]
+  const methodNames = config.methods || [DEFAULT_GETTEXT];
 
   const AST = parseECMA(source);
   const translations = extractTranslations(...methodNames)(AST);
@@ -34,26 +39,32 @@ module.exports = function(source) {
     return source;
   }
 
-  fs.readFile(output.path, (err, buffer) => {
+  const formatTranslations = formatWithRequest(this.request);
 
-    const formatTranslations = formatWithRequest(this.request);
+  try {
+    const buffer = fs.readFileSync(output.path);
+    const current = po2json.parse(buffer);
+    const newStrings = (node) => !current[prop('text')(node)]
+    const found = filter(newStrings)(translations);
 
-    if (err) {
-      output.source = formatTranslations(translations);
-      fs.writeFileSync(output.path, output.source);
+    if (found.length){
 
-    } else {
-      const current = po2json.parse(buffer);
-      const newStrings = (node) => !current[prop('text')(node)]
-      const found = filter(newStrings)(translations);
+      console.log(
+        `${found.length} new translations found in ${getFilename(this.resourcePath)}`
+      );
 
-      if (found.length){
-        console.log(`${found.length} new translations found`);
-        output.source = formatTranslations(found);
-        fs.appendFileSync(output.path, output.source);
-      }
+      output.source = formatTranslations(found);
+      fs.appendFileSync(output.path, output.source);
     }
-  });
+
+  } catch (error) {
+    const header = formatHeader(config.header);
+    const body = formatTranslations(translations);
+    output.source = `${header}\n${body}`
+
+    mkdirp.sync(getFolderPath(output.path));
+    fs.writeFileSync(output.path, output.source);
+  }
 
   return source;
 }

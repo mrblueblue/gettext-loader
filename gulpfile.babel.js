@@ -3,7 +3,6 @@
 import {compose, map, remove} from 'ramda';
 import fs from 'fs';
 import gulp from 'gulp';
-import concat from 'gulp-concat';
 
 gulp.task('utils', () => {
 
@@ -34,10 +33,4 @@ gulp.task('utils', () => {
     fs.writeFileSync('src/utils/index.js', files.join(''));
   });
 
-});
-
-gulp.task('po', function() {
-  return gulp.src('./assets/**/*.po')
-    .pipe(concat('en.po'))
-    .pipe(gulp.dest('./'));
 });

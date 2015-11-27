@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build:dev": "mkdir -p node_modules/gettext-loader && npm run build && cp -R dist/ node_modules/gettext-loader/",
+    "example": "npm run build:dev && webpack ./assets/index.js",
     "build": "gulp utils && babel src/ --out-dir dist/",
     "test": "mocha --compilers js:babel-core/register"
   },
@@ -46,6 +47,7 @@
     "esprima-fb": "^15001.1001.0-dev-harmony-fb",
     "estree-utils": "^0.1.1",
     "loader-utils": "^0.2.11",
+    "mkdirp": "^0.5.1",
     "po2json": "^0.4.1",
     "ramda": "^0.17.1"
   }

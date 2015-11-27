@@ -1,7 +1,7 @@
 import {reduce, last, takeLast} from 'ramda';
 import makeRelativePath from './makeRelativePath'
 
-export default function formatTranslations(translations){
+export default function formatMessageBlock(translations){
   function format(accum, object){
     const path = makeRelativePath(object.path);
     const translationBlock = [

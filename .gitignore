@@ -1,5 +1,5 @@
-node_modules
-dist
 *.po
-bundle.js
+i18n
+node_modules
 .tmp
+dist

@@ -16,7 +16,8 @@ To use `gettext-loader` you will need a `gettext.config.js` file in your root di
 ```javascript
 
 module.exports = {
-  methods: ['__', '$translate'],
+  methods: ['__', 'translate'],
+  output: 'i18n/en.po',
   header: {
     'Project-Id-Version': '1233',
     'Report-Msgid-Bugs-To':'Jonathan Huang',

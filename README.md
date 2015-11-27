@@ -1,5 +1,5 @@
 # gettext-loader
-[![Build Status](https://travis-ci.org/mrblueblue/gettext-loader.svg?branch=master)](https://travis-ci.org/mrblueblue/gettext-loader) 
+[![Build Status](https://travis-ci.org/mrblueblue/gettext-loader.svg?branch=master)](https://travis-ci.org/mrblueblue/gettext-loader)
 
 A Webpack loader that compiles Gettext PO files from source code.
 
@@ -46,3 +46,9 @@ module: {
 ```
 
 `gettext-loader` does not modify your source code. It only outputs a PO file by parsing your JS source code.
+
+## Running Examples
+```
+npm install --peer
+npm run examples
+```

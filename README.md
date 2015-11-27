@@ -53,3 +53,66 @@ module: {
 npm install --peer
 npm run examples
 ```
+
+## PO File Generation
+
+`gettext-loader` parses your source code:
+
+```javascript
+//example.jsx
+import React from 'react';
+import {__} from 'i18n';
+
+const translation = __('evening star');
+const plural = __('I saw the morning start %d day ago')
+
+class Example extends React.Component {
+  render(){
+    return (
+      <div className='container'>
+        <div className='top'>
+          <p>{this.props.text}</p>
+          <p></p>
+          <p>{__('pegasus')}</p>
+        </div>
+        <form>
+          <input type='text' placeholder={__('morning star')}/>
+        </form>
+      </div>
+    )
+  }
+}
+
+```
+
+And generates a `.po` file from it:
+
+```
+"Project-Id-Version : 1233"
+"Report-Msgid-Bugs-To : Jonathan Huang"
+"Last-Translator : Jonathan Huang"
+"Language-Team : Squad Everywhere"
+"Language : en"
+"Plural-Forms : nplurals=2; plural=(n != 1);"
+"MIME-Version : 1.0"
+"Content-Type : text/plain; charset=UTF-8"
+"Content-Transfer-Encoding : 8bit"
+
+#: assets/jsx/example.jsx 5:23
+msgid "evening star"
+msgtr ""
+
+#: assets/jsx/example.jsx 6:17
+msgid "I saw the morning start %d day ago"
+msgtr[0] ""
+msgtr[1] ""
+
+#: assets/jsx/example.jsx 15:14
+msgid "pegasus"
+msgtr ""
+
+#: assets/jsx/example.jsx 18:42
+msgid "moring star"
+msgtr ""
+
+```

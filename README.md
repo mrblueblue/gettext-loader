@@ -1,4 +1,5 @@
 # gettext-loader
+[![Build Status](https://travis-ci.org/mrblueblue/gettext-loader.svg?branch=master)](https://travis-ci.org/mrblueblue/gettext-loader) 
 
 A Webpack loader that compiles Gettext PO files from source code.
 

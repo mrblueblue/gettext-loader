@@ -29,7 +29,7 @@
   "homepage": "https://github.com/mrblueblue/gettext-loader#readme",
   "devDependencies": {
     "babel-core": "^6.2.1",
-    "babel-loader": "^5.4.0",
+    "babel-loader": "^6.1.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
@@ -37,6 +37,7 @@
     "dot-loader": "^0.1.1",
     "esprima-pretty-loader": "^0.1.3",
     "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.3",
     "webpack": "^1.12.2"
@@ -45,6 +46,7 @@
     "esprima-fb": "^15001.1001.0-dev-harmony-fb",
     "estree-utils": "^0.1.1",
     "loader-utils": "^0.2.11",
+    "po2json": "^0.4.1",
     "ramda": "^0.17.1"
   }
 }

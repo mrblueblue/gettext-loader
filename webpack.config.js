@@ -9,9 +9,10 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.jst/, loaders: ['dot-loader'] },
-      { test: /\.jsx?$/, loaders: [`gettext-loader?__,translate`]},
-      { test: /\.coffee/, loaders: ['coffee-loader'] }
+      { test: /\.jst/, loaders: ['gettext-loader','dot-loader'] },
+      { test: /\.jsx?$/, loaders: ['babel-loader', 'gettext-loader'] },
+      { test: /\.js?$/, loaders: ['gettext-loader'] },
+      { test: /\.coffee/, loaders: ['gettext-loader','coffee-loader'] }
     ]
   },
 

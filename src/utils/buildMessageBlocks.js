@@ -50,7 +50,7 @@ export const formatMessageBlock = (accum, translation) => {
     cat(accum),
     cat(translationBlock),
     cat('\n'),
-    cat('msgtr ""\n'),
+    cat('msgstr ""\n'),
   )('\n');
 }
 

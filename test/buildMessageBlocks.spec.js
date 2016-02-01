@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import {range} from 'ramda'
 import {
-  buildMsgtr,
-  buildMsgtrs,
+  buildMsgstr,
+  buildMsgstrs,
   getNumPlurals,
   formatMessageBlock,
 } from '../src/utils/buildMessageBlocks';
@@ -43,15 +43,15 @@ describe('buildMessageBlocks', () => {
     const expected = [
       '#: /here 1:5\n',
       'msgid "hey"\n',
-      'msgtr ""\n',
+      'msgstr ""\n',
       "\n",
       '#: /here 1:5\n',
       'msgid "thank you"\n',
-      'msgtr ""\n',
+      'msgstr ""\n',
       "\n",
       '#: /here 1:5\n',
       'msgid "how are you"\n',
-      'msgtr ""\n\n'
+      'msgstr ""\n\n'
     ]
 
     const formatted = buildMessageBlocks(translations);
@@ -81,12 +81,12 @@ describe('buildMessageBlocks', () => {
     const expected = [
       '#: /here 1:5\n',
       'msgid "hey"\n',
-      'msgtr ""\n',
+      'msgstr ""\n',
       "\n",
       '#: /here 1:5\n',
       'msgid "%d views"\n',
-      'msgtr[0] ""\n',
-      'msgtr[1] ""\n\n'
+      'msgstr[0] ""\n',
+      'msgstr[1] ""\n\n'
     ]
 
     const formatted = buildMessageBlocks(translations);
@@ -94,18 +94,18 @@ describe('buildMessageBlocks', () => {
     expect(formatted).to.be.deep.equal(expected.join(''));
   });
 
-  describe('buildMsgtr', () => {
+  describe('buildMsgstr', () => {
 
     it('builds a msgstr in a po file', () => {
-      let ouput = ['msgtr[0] ""\n', 'msgtr[1] ""\n'];
-      expect(buildMsgtr([0,1])).to.be.deep.equal(ouput);
+      let ouput = ['msgstr[0] ""\n', 'msgstr[1] ""\n'];
+      expect(buildMsgstr([0,1])).to.be.deep.equal(ouput);
     });
   });
 
-  describe('buildMsgtrs', () => {
+  describe('buildMsgstrs', () => {
     it('builds an array of msgstr\'s given a range', () => {
-      let ouput = ['msgtr[0] ""\n', 'msgtr[1] ""\n', 'msgtr[2] ""\n', 'msgtr[3] ""\n'];
-      expect(buildMsgtrs(4)).to.be.deep.equal(ouput.join(''));
+      let ouput = ['msgstr[0] ""\n', 'msgstr[1] ""\n', 'msgstr[2] ""\n', 'msgstr[3] ""\n'];
+      expect(buildMsgstrs(4)).to.be.deep.equal(ouput.join(''));
     });
   });
 
@@ -131,7 +131,7 @@ describe('buildMessageBlocks', () => {
       const expected = [
         '#: /here 1:5',
         'msgid "hello"',
-        'msgtr ""',
+        'msgstr ""',
         '\n'
       ]
 
@@ -154,8 +154,8 @@ describe('buildMessageBlocks', () => {
       const expected = [
         '#: /here 1:5',
         'msgid "%d views"',
-        'msgtr[0] ""',
-        'msgtr[1] ""\n\n'
+        'msgstr[0] ""',
+        'msgstr[1] ""\n\n'
       ]
 
       const formatted = formatMessageBlock('', translation);

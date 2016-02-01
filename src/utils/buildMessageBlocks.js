@@ -20,8 +20,8 @@ import {
 const root = process.env.PWD;
 const config = require(path.join(root, 'gettext.config.js'));
 
-export const buildMsgtr = map((num) => `msgtr[${num}] ""\n`)
-export const buildMsgtrs = (num) => cx(join(''), buildMsgtr)(range(0, num))
+export const buildMsgstr = map((num) => `msgstr[${num}] ""\n`)
+export const buildMsgstrs = (num) => cx(join(''), buildMsgstr)(range(0, num))
 export const getNumPlurals = cx(parseInt, last, head, split(';'))
 
 export const formatMessageBlock = (accum, translation) => {
@@ -34,7 +34,7 @@ export const formatMessageBlock = (accum, translation) => {
 
   if (isPluralForm(translation.text)){
     const msgstrs = cx(
-      buildMsgtrs,
+      buildMsgstrs,
       getNumPlurals
     )(config.header['Plural-Forms'])
 
@@ -50,7 +50,7 @@ export const formatMessageBlock = (accum, translation) => {
     cat(accum),
     cat(translationBlock),
     cat('\n'),
-    cat('msgtr ""\n'),
+    cat('msgstr ""\n'),
   )('\n');
 }
 

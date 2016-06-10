@@ -58,9 +58,10 @@ module.exports = function(source) {
     }
 
   } catch (error) {
+    const header_prefix = config.header_prefix || '';
     const header = formatHeader(config.header);
     const body = formatTranslations(translations);
-    output.source = `${header}\n${body}`
+    output.source = `${header_prefix}\n${header}\n${body}`
 
     mkdirp.sync(getFolderPath(output.path));
     fs.writeFileSync(output.path, output.source);

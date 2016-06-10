@@ -33,6 +33,13 @@ module.exports = {
 
 ```
 
+You can also specify a literal header prefix to include in the file, for comments or other things.
+
+```
+module.exports = {
+  header_prefix: '# this is my po file\nmsgid ""\nmsgstr ""'
+```
+
 Since 'gettext-loader' only parses Javascript (including ES6 and JSX), place it after loaders that transform some source to JS code.
 
 ```javascript

@@ -116,3 +116,17 @@ msgid "moring star"
 msgtr ""
 
 ```
+
+## Multiple PO File Output
+
+If you want to use code splitting with your po files, you can configure `gettext-loader` to use the source file's name as part of its output file.
+
+```javascript
+
+module.exports = {
+  output: 'i18n/[filename]_en.po'
+}
+
+```
+
+`[filename]` will be replaced with the filename where translations are found.

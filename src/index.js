@@ -25,9 +25,15 @@ module.exports = function(source) {
   if (this.cacheable){
     this.cacheable();
   }
+  const relativeFilename = path.relative(root, this.resourcePath);
+
+  if (relativeFilename.indexOf('..') >= 0) {
+    // don't consider files outside of root
+    return source;
+  }
 
   const output = {
-    path: `${root}/${config.output.replace('[filename]', getFilename(this.resourcePath)) || 'en.po'}`
+    path: `${root}/${config.output.replace('[filename]', relativeFilename) || 'en.po'}`
   }
 
   const methodNames = config.methods || [DEFAULT_GETTEXT];

@@ -1,4 +1,4 @@
-import {filter, map, curry, compose, prop, head} from 'ramda';
+import {uniqBy, map, curry, compose, prop, head} from 'ramda';
 import {filterTreeForMethodsAndFunctionsNamed} from 'estree-utils';
 
 const extractTranslations = (...args) => (ast) => {
@@ -24,7 +24,8 @@ const extractTranslations = (...args) => (ast) => {
     }
   }
 
-  return map(addLocation)(translationStrings);
+  const unique = s => gettextLocations[translationStrings.indexOf(s)];
+  return map(addLocation)(uniqBy(unique)(translationStrings));
 }
 
 export default extractTranslations;

@@ -33,6 +33,13 @@ module.exports = {
 
 ```
 
+You can also specify a literal header prefix to include in the file, for comments or other things.
+
+```
+module.exports = {
+  header_prefix: '# this is my po file\nmsgid ""\nmsgstr ""'
+```
+
 Since 'gettext-loader' only parses Javascript (including ES6 and JSX), place it after loaders that transform some source to JS code.
 
 ```javascript
@@ -116,3 +123,17 @@ msgid "moring star"
 msgtr ""
 
 ```
+
+## Multiple PO File Output
+
+If you want to use code splitting with your po files, you can configure `gettext-loader` to use the source file's name as part of its output file.
+
+```javascript
+
+module.exports = {
+  output: 'i18n/[filename]_en.po'
+}
+
+```
+
+`[filename]` will be replaced with the filename where translations are found.

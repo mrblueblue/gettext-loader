@@ -85,6 +85,7 @@ describe('buildMessageBlocks', () => {
       "\n",
       '#: /here 1:5\n',
       'msgid "%d views"\n',
+      'msgid_plural ""\n',
       'msgstr[0] ""\n',
       'msgstr[1] ""\n\n'
     ]
@@ -154,6 +155,7 @@ describe('buildMessageBlocks', () => {
       const expected = [
         '#: /here 1:5',
         'msgid "%d views"',
+        'msgid_plural ""',
         'msgstr[0] ""',
         'msgstr[1] ""\n\n'
       ]

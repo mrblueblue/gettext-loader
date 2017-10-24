@@ -23,16 +23,16 @@ const config = require(path.join(root, 'gettext.config.js'));
 export const buildMsgstr = map((num) => `msgstr[${num}] ""\n`)
 export const buildMsgstrs = (num) => cx(join(''), buildMsgstr)(range(0, num))
 export const getNumPlurals = cx(parseInt, last, head, split(';'))
-
 export const formatMessageBlock = (accum, translation) => {
   const path = makeRelativePath(translation.path);
 
-  const translationBlock = cat(
+  let translationBlock = cat(
     `#: ${path} ${translation.loc.line}:${translation.loc.column}\n`,
     `msgid "${translation.text}"`
   )
 
   if (isPluralForm(translation.text)){
+    translationBlock += `\nmsgid_plural ""`
     const msgstrs = cx(
       buildMsgstrs,
       getNumPlurals

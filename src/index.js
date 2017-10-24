@@ -25,9 +25,15 @@ module.exports = function(source) {
   if (this.cacheable){
     this.cacheable();
   }
+  const relativeFilename = path.relative(root, this.resourcePath);
+
+  if (relativeFilename.indexOf('..') >= 0) {
+    // don't consider files outside of root
+    return source;
+  }
 
   const output = {
-    path: `${root}/${config.output || 'en.po'}`
+    path: `${root}/${config.output.replace('[filename]', relativeFilename) || 'en.po'}`
   }
 
   const methodNames = config.methods || [DEFAULT_GETTEXT];
@@ -58,9 +64,10 @@ module.exports = function(source) {
     }
 
   } catch (error) {
+    const header_prefix = config.header_prefix || '';
     const header = formatHeader(config.header);
     const body = formatTranslations(translations);
-    output.source = `${header}\n${body}`
+    output.source = `${header_prefix}\n${header}\n${body}`
 
     mkdirp.sync(getFolderPath(output.path));
     fs.writeFileSync(output.path, output.source);

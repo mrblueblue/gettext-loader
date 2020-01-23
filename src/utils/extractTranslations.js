@@ -11,7 +11,7 @@ const extractTranslations = (...args) => (ast) => {
 
   const gettextLocations = map((node) => node.loc.start)(gettextFunctions);
   const firstArgument = compose(prop('value'), head, prop('arguments'));
-  const translationStrings = map(firstArgument)(gettextFunctions);
+  const translationStrings = map(firstArgument)(gettextFunctions).filter(x => x);
 
   const addLocation = (string) => {
     const location = gettextLocations[translationStrings.indexOf(string)];
